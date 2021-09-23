@@ -6,22 +6,42 @@
     <router-link to="/discount"
       ><button class="btn btn-primary mt-3">Set discount</button></router-link
     >
+    <button @click="toastShow" class="btn btn-primary mt-3">
+      Set discount
+    </button>
+  </div>
+  <div
+    ref="toastPop"
+    class="toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    style="position: absolute; top: 0; right: 0"
+  >
+    <div class="toast-header">
+      <div>Notification</div>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
   </div>
   <div class="main"><router-view></router-view></div>
 </template>
 
 <script>
-import { useStore } from "vuex";
+import { Toast } from "bootstrap/dist/js/bootstrap.esm.min.js";
+
 export default {
   name: "App",
-  setup() {
-    const store = useStore();
-    store.dispatch("fetchPosts");
-  },
+  setup() {},
   data() {
     return {
       someVar: 0,
     };
+  },
+  methods: {
+    toastShow() {
+      let to = new Toast(this.$refs.toastPop);
+      to.show();
+    },
   },
 };
 </script>

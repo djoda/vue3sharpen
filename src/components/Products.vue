@@ -1,37 +1,91 @@
 <template>
   <table class="table">
     <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
+      <button @click="showTable = true" class="btn btn-dark mt-3 btnMr">
+        Table view
+      </button>
+      <button @click="showTable = false" class="btn btn-dark mt-3">
+        Cards
+      </button>
+      <tr v-show="showTable">
+        <th scope="col">UPC</th>
+        <th scope="col">Name</th>
         <th scope="col">Price</th>
-        <th scope="col">Category</th>
+        <th scope="col">Discount</th>
+        <th scope="col">TaxRate</th>
+        <th scope="col">Total</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-if="showTable">
       <tr v-for="item in $store.state.products" :key="item.id">
-        <th scope="row">{{ item.id }}</th>
-        <td>{{ item.title }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.category }}</td>
+        <td>{{ item.UPC }}</td>
+        <td>{{ item.Name }}</td>
+        <td>{{ item.Price }}</td>
+        <td>{{ item.calculateDiscount() }}</td>
+        <td>{{ item.TaxRate }}</td>
+        <td>{{ item.calculateTotal() }}</td>
       </tr>
+    </tbody>
+
+    <tbody v-else>
+      <div
+        class="card m-3"
+        v-for="item in $store.state.products"
+        :key="item.id"
+        style="width: 650px; display: inline-block"
+      >
+        <img
+          class="card-img-top"
+          :src="item.Image"
+          alt="Card image cap"
+          style="width: 200px; height: 200px"
+        />
+        <div class="card-body">
+          <ul class="list-group list-group-flush firstUl border-right">
+            <li class="list-group-item">UPC : {{ item.UPC }}</li>
+            <li class="list-group-item">Name {{ item.Name }}</li>
+            <li class="list-group-item">Price : {{ item.Price }}$</li>
+          </ul>
+          <ul class="list-group list-group-flush secondUl">
+            <li class="list-group-item">Tax rate : {{ item.TaxRate }}%</li>
+            <li class="list-group-item">
+              Discount {{ item.calculateDiscount() }}$
+            </li>
+            <li class="list-group-item">
+              Total : {{ item.calculateTotal() }}$
+            </li>
+          </ul>
+        </div>
+      </div>
     </tbody>
   </table>
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "Products",
-  setup() {},
-  mounted() {
-    this.$store.commit("addPost", "asdsad");
-  },
-  computed: {
-    ...mapState(["posts"]),
+  data() {
+    return {
+      showTable: true,
+    };
   },
 };
 </script>
 
 <style scoped>
+.btnMr {
+  margin-right: 15px;
+}
+
+.firstUl {
+  position: absolute;
+  left: 200px;
+  top: 0;
+}
+
+.secondUl {
+  position: absolute;
+  left: 400px;
+  top: 0;
+}
 </style>
