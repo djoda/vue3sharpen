@@ -1,30 +1,65 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="sidebar">
+    <router-link to="/"
+      ><button class="btn btn-primary">Show products</button></router-link
+    >
+    <router-link to="/discount"
+      ><button class="btn btn-primary mt-3">Set discount</button></router-link
+    >
   </div>
-  <router-view/>
+  <div class="main"><router-view></router-view></div>
 </template>
 
+<script>
+import { useStore } from "vuex";
+export default {
+  name: "App",
+  setup() {
+    const store = useStore();
+    store.dispatch("fetchPosts");
+  },
+  data() {
+    return {
+      someVar: 0,
+    };
+  },
+};
+</script>
+
 <style>
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  width: 100%;
+  min-height: 100%;
 }
 
-#nav {
-  padding: 30px;
+.sidebar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  flex-direction: column;
+  width: 250px;
+  min-height: 100vh;
+  padding-top: 20px;
+  background-color: rgb(99, 112, 112);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.main {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  width: calc(100vw - 250px - 15px);
+  position: absolute;
+  left: 260px;
+  top: 0px;
+  padding-left: 15px;
+  background-color: rgb(250, 250, 250);
 }
 </style>
