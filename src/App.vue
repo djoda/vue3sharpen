@@ -6,42 +6,42 @@
     <router-link to="/discount"
       ><button class="btn btn-primary mt-3">Set discount</button></router-link
     >
-    <button @click="toastShow" class="btn btn-primary mt-3">
-      Set discount
-    </button>
+
+    <router-link to="/upcdiscount"
+      ><button class="btn btn-primary mt-3" @click="show">
+        Set UPC discount
+      </button></router-link
+    >
   </div>
-  <div
-    ref="toastPop"
-    class="toast"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-    style="position: absolute; top: 0; right: 0"
-  >
-    <div class="toast-header">
-      <div>Notification</div>
-    </div>
-    <div class="toast-body">Hello, world! This is a toast message.</div>
+
+  <div class="main">
+    <transition name="fade">
+      <div v-show="showToast" class="myToast">{{ toastMessage }}</div>
+    </transition>
+    <router-view></router-view>
   </div>
-  <div class="main"><router-view></router-view></div>
 </template>
 
 <script>
-import { Toast } from "bootstrap/dist/js/bootstrap.esm.min.js";
-
+import { provide, ref } from "vue";
 export default {
   name: "App",
-  setup() {},
-  data() {
+  setup() {
+    const showToast = ref(false);
+    const toastMessage = ref("");
+    provide("showToast", showToast);
+    provide("toastMessage", toastMessage);
     return {
-      someVar: 0,
+      showToast,
+      toastMessage,
     };
   },
+  data() {
+    return {};
+  },
   methods: {
-    toastShow() {
-      let to = new Toast(this.$refs.toastPop);
-      to.show();
-    },
+    show() {},
+    hide() {},
   },
 };
 </script>
@@ -81,5 +81,27 @@ body {
   top: 0px;
   padding-left: 15px;
   background-color: rgb(250, 250, 250);
+}
+.myToast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 200px;
+  height: 50px;
+  border: 1px solid black;
+  background-color: bisque;
+  padding: 3px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
