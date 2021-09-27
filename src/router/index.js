@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Products from "@/components/Products.vue"
 import Discount from "@/components/Discount.vue"
 import UPCDiscount from "@/components/UPCDiscount.vue"
+import Product from "@/components/Product.vue"
+
 const routes = [
   {
     path: "/",
@@ -17,6 +19,11 @@ const routes = [
     path: "/upcdiscount",
     name: "UPCDiscount",
     component: UPCDiscount
+  },
+  {
+    path: "/product/:upc",
+    name: "Product",
+    component: Product
   }
 ]
 

@@ -8,16 +8,13 @@
     >
 
     <router-link to="/upcdiscount"
-      ><button class="btn btn-primary mt-3" @click="show">
+      ><button class="btn btn-primary mt-3">
         Set UPC discount
       </button></router-link
     >
   </div>
 
   <div class="main">
-    <transition name="fade">
-      <div v-show="showToast" class="myToast">{{ toastMessage }}</div>
-    </transition>
     <router-view></router-view>
   </div>
 </template>
@@ -38,10 +35,6 @@ export default {
   },
   data() {
     return {};
-  },
-  methods: {
-    show() {},
-    hide() {},
   },
 };
 </script>

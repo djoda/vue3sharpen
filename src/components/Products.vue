@@ -34,38 +34,30 @@
         :key="item.id"
         style="width: 650px; display: inline-block"
       >
-        <img
-          class="card-img-top"
-          :src="item.Image"
-          alt="Card image cap"
-          style="width: 200px; height: 200px"
-        />
-        <div class="card-body">
-          <ul class="list-group list-group-flush firstUl border-right btnLi">
-            <li class="list-group-item">UPC : {{ item.UPC }}</li>
-            <li class="list-group-item">Name {{ item.Name }}</li>
-            <li class="list-group-item">Price : {{ item.Price }}$</li>
-            <li>
-              <button class="btn btn-primary m-2 list-group-item">
-                New tax rate
-              </button>
-            </li>
-          </ul>
-          <ul class="list-group list-group-flush secondUl btnLi">
-            <li class="list-group-item">Tax rate : {{ item.TaxRate }}%</li>
-            <li class="list-group-item">
-              Discount {{ item.calculateDiscount() }}$
-            </li>
-            <li class="list-group-item">
-              Total : {{ item.calculateTotal() }}$
-            </li>
-            <li>
-              <button class="btn btn-primary m-2 list-group-item">
-                Add expenses
-              </button>
-            </li>
-          </ul>
-        </div>
+        <router-link :to="'/product/' + item.UPC">
+          <img
+            class="card-img-top"
+            :src="item.Image"
+            alt="Card image cap"
+            style="width: 200px; height: 200px"
+          />
+          <div class="card-body">
+            <ul class="list-group list-group-flush firstUl border-right btnLi">
+              <li class="list-group-item">UPC : {{ item.UPC }}</li>
+              <li class="list-group-item">Name {{ item.Name }}</li>
+              <li class="list-group-item">Price : {{ item.Price }}$</li>
+            </ul>
+            <ul class="list-group list-group-flush secondUl btnLi">
+              <li class="list-group-item">Tax rate : {{ item.TaxRate }}%</li>
+              <li class="list-group-item">
+                Discount {{ item.calculateDiscount() }}$
+              </li>
+              <li class="list-group-item">
+                Total : {{ item.calculateTotal() }}$
+              </li>
+            </ul>
+          </div>
+        </router-link>
       </div>
     </tbody>
   </table>
@@ -77,6 +69,7 @@ export default {
   data() {
     return {
       showTable: true,
+      newTaxRate: 0,
     };
   },
 };
@@ -100,5 +93,9 @@ export default {
 }
 .btnLi {
   list-style-type: none;
+}
+
+.card:hover {
+  border: 1px solid black;
 }
 </style>
