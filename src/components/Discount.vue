@@ -12,18 +12,13 @@
 
 <script>
 import { useStore } from "vuex";
-import { inject } from "vue";
 
 export default {
   name: "Discount",
   setup() {
     const ud = useStore().state.universalDiscount;
-    const showToast = inject("showToast");
-    const toastMessage = inject("toastMessage");
     return {
       ud,
-      showToast,
-      toastMessage,
     };
   },
   methods: {

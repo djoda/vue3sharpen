@@ -12,6 +12,10 @@
         Set UPC discount
       </button></router-link
     >
+
+    <router-link to="/cap"
+      ><button class="btn btn-primary mt-3">Set cap</button></router-link
+    >
   </div>
 
   <div class="main">
@@ -20,19 +24,9 @@
 </template>
 
 <script>
-import { provide, ref } from "vue";
 export default {
   name: "App",
-  setup() {
-    const showToast = ref(false);
-    const toastMessage = ref("");
-    provide("showToast", showToast);
-    provide("toastMessage", toastMessage);
-    return {
-      showToast,
-      toastMessage,
-    };
-  },
+  setup() {},
   data() {
     return {};
   },
@@ -74,27 +68,5 @@ body {
   top: 0px;
   padding-left: 15px;
   background-color: rgb(250, 250, 250);
-}
-.myToast {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 200px;
-  height: 50px;
-  border: 1px solid black;
-  background-color: bisque;
-  padding: 3px;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

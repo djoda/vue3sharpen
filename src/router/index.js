@@ -3,6 +3,7 @@ import Products from "@/components/Products.vue"
 import Discount from "@/components/Discount.vue"
 import UPCDiscount from "@/components/UPCDiscount.vue"
 import Product from "@/components/Product.vue"
+import Cap from "@/components/Cap.vue"
 
 const routes = [
   {
@@ -24,6 +25,12 @@ const routes = [
     path: "/product/:upc",
     name: "Product",
     component: Product
+  }
+  ,
+  {
+    path: "/cap",
+    name: "Cap",
+    component: Cap
   }
 ]
 

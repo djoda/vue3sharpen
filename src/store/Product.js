@@ -19,11 +19,17 @@ class Product {
     }
 
     calculateDiscount() {
+        let ret;
         if (useStore().state.additiveMode && this.UPCDiscount != 0) {
-            return this.calculateGlobal() + this.calculateUCPDiscount();
+            ret = this.calculateGlobal() + this.calculateUCPDiscount();
         } else {
-            return (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
+            ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
         }
+        if (useStore().state.cap != 0 && ret >= useStore().state.cap)
+            return useStore().state.cap;
+        else
+            return ret;
+
     }
 
     calculateTax() {
