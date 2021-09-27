@@ -13,6 +13,8 @@
         type="checkbox"
         v-model="taxBeforeDiscount"
       />
+      <label style="margin-left: 20px">Switch discount mode</label>
+      <input style="margin-left: 15px" type="checkbox" v-model="additiveMode" />
       <tr v-show="showTable">
         <th scope="col">UPC</th>
         <th scope="col">Name</th>
@@ -77,11 +79,15 @@ export default {
       showTable: true,
       newTaxRate: 0,
       taxBeforeDiscount: true,
+      additiveMode: true,
     };
   },
   watch: {
     taxBeforeDiscount(newValue) {
       this.$store.dispatch("changeBeforeDiscount", newValue);
+    },
+    additiveMode(newValue) {
+      this.$store.dispatch("changeDiscountMode", newValue);
     },
   },
 };

@@ -19,7 +19,11 @@ class Product {
     }
 
     calculateDiscount() {
-        return this.calculateGlobal() + this.calculateUCPDiscount();
+        if (useStore().state.additiveMode && this.UPCDiscount != 0) {
+            return this.calculateGlobal() + this.calculateUCPDiscount();
+        } else {
+            return (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
+        }
     }
 
     calculateTax() {

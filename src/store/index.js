@@ -6,13 +6,17 @@ import Expenses from './Expenses';
 export default createStore({
   state: {
     mockProducts: [],
-    products: [new Product("Product1", 111, 4565, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-    new Product("Product2", 222, 3622, "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"),
-    new Product("Product3", 333, 441565, "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"),
-    new Product("Product4", 444, 56, "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg")],
+    products:
+      [
+        new Product("Product1", 111, 4565, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+        new Product("Product2", 222, 3622, "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"),
+        new Product("Product3", 333, 441565, "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"),
+        new Product("Product4", 444, 56, "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg")
+      ],
     universalDiscount: 0,
     expenses: [new Expenses("Transport", 500, "$", 111)],
-    beforeDiscount: true
+    beforeDiscount: true,
+    additiveMode: true
   },
   getters: {
     getByUPC: (state) => (UPC) => {
@@ -39,9 +43,13 @@ export default createStore({
       state.expenses.push(payload);
     },
     changeBeforeDisocunt(state, payload) {
-      console.log("payload", payload)
       state.beforeDiscount = payload;
-    }
+    },
+    changeDiscountMode(state, payload) {
+      console.log(payload)
+      state.additiveMode = payload;
+    },
+
   },
   actions: {
     async fetchPosts({ commit }) {
@@ -61,6 +69,9 @@ export default createStore({
     },
     async changeBeforeDiscount(context, payload) {
       context.commit("changeBeforeDisocunt", payload);
+    },
+    async changeDiscountMode(context, payload) {
+      context.commit("changeDiscountMode", payload);
     }
   },
   modules: {
