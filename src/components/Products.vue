@@ -7,6 +7,12 @@
       <button @click="showTable = false" class="btn btn-dark mt-3">
         Cards
       </button>
+      <label style="margin-left: 20px">Apply tax before discount</label>
+      <input
+        style="margin-left: 15px"
+        type="checkbox"
+        v-model="taxBeforeDiscount"
+      />
       <tr v-show="showTable">
         <th scope="col">UPC</th>
         <th scope="col">Name</th>
@@ -70,7 +76,13 @@ export default {
     return {
       showTable: true,
       newTaxRate: 0,
+      taxBeforeDiscount: true,
     };
+  },
+  watch: {
+    taxBeforeDiscount(newValue) {
+      this.$store.dispatch("changeBeforeDiscount", newValue);
+    },
   },
 };
 </script>

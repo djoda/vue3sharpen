@@ -15,25 +15,30 @@ class Product {
     }
 
     calculateGlobal() {
-        return ((this.calculateTax() + this.Price) * this.getUniversalDiscount()) / 100;
+        return this.Price * this.getUniversalDiscount() / 100;
     }
 
     calculateDiscount() {
-        return this.calculateGlobal(this.getUniversalDiscount()) + this.calculateUCPDiscount();
+        return this.calculateGlobal() + this.calculateUCPDiscount();
     }
 
     calculateTax() {
-        return this.Price * (this.TaxRate / 100);
+        // console.log((useStore()).state.beforeDiscount)
+        if ((useStore()).state.beforeDiscount)
+            return this.Price * (this.TaxRate / 100);
+        else {
+            // console.log("ASDAS", this.calculateDiscount(this.getUniversalDiscount()))
+            return (this.Price - this.calculateDiscount()) * this.TaxRate / 100;
+        }
     }
 
     calculateUCPDiscount() {
-        return (this.Price * this.UPCDiscount) / 100;
+        return this.Price * this.UPCDiscount / 100;
     }
 
-    calculateTaxes() {
+    calculateExpenses() {
         let total = 0;
         for (let expense of useStore().state.expenses) {
-            console.log(expense)
             if (expense.AmountType === "%") {
                 total += this.Price * expense.Amount / 100;
             } else {
@@ -45,7 +50,7 @@ class Product {
 
     calculateTotal() {
         return (
-            (this.Price + this.calculateTaxes() - this.calculateDiscount(this.getUniversalDiscount()) + this.calculateTax()).toFixed(2)
+            (this.Price + this.calculateExpenses() - this.calculateDiscount() + this.calculateTax()).toFixed(2)
         );
     }
 }
