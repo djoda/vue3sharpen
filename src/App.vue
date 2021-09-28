@@ -20,14 +20,14 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 export default {
   name: "App",
-  setup() {},
+  setup() {
+    useStore().dispatch("getRates");
+  },
   data() {
     return {};
-  },
-  async mounted() {
-    this.$store.dispatch("getRates");
   },
 };
 </script>

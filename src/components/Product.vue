@@ -1,5 +1,5 @@
 <template>
-  <div class="card product">
+  <div v-if="ratesLoaded" class="card product">
     <div class="card-body">
       <img :src="product.Image" class="card-img-top" alt="..." />
       <div>
@@ -7,7 +7,7 @@
           <li class="list-group-item">UPC : {{ product.UPC }}</li>
           <li class="list-group-item">Name {{ product.Name }}</li>
           <li class="list-group-item">
-            Price : {{ product.Price }} {{ product.Currency }}
+            Price : {{ product.Price.toFixed(2) }} {{ product.Currency }}
           </li>
           <li class="list-group-item">Tax rate : {{ product.TaxRate }}%</li>
           <li class="list-group-item">
@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
+import { useStore, mapState } from "vuex";
 import { useRoute } from "vue-router";
 import Expenses from "@/store/Expenses.js";
 
@@ -189,6 +189,7 @@ export default {
   setup() {
     let store = useStore();
     let product = store.getters.getByUPC(Number(useRoute().params.upc));
+
     return {
       product,
     };
@@ -206,10 +207,12 @@ export default {
   },
   watch: {
     curr(newValue) {
-      this.product.Price =
-        this.product.PriceUSD * this.$store.getters.getCurrencyRate(newValue);
-      this.product.Currency = newValue;
-      this.$store.dispatch("updateProduct", this.product);
+      if (this.$store.getters.getCurrencyRate(newValue) !== undefined) {
+        this.product.Price =
+          this.product.PriceUSD * this.$store.getters.getCurrencyRate(newValue);
+        this.product.Currency = newValue;
+        this.$store.dispatch("updateProduct", this.product);
+      }
     },
   },
   methods: {
@@ -240,6 +243,9 @@ export default {
   },
   mounted() {
     this.curr = this.product.Currency;
+  },
+  computed: {
+    ...mapState(["ratesLoaded"]),
   },
 };
 </script>

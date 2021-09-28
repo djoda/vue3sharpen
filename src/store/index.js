@@ -19,7 +19,8 @@ export default createStore({
     additiveMode: true,
     apiKey: "6ca79beb46-556a793292-r0507o",
     rates: [],
-    currencies: []
+    currencies: [],
+    ratesLoaded: false
   },
   getters: {
     getByUPC: (state) => (UPC) => {
@@ -29,8 +30,13 @@ export default createStore({
       return state.expenses.filter(e => e.ProductUPC === UPC);
     },
     getCurrencyRate: (state) => (curr) => {
-      console.log(curr)
-      return state.rates.results[String(curr)];
+      if (state.rates.results !== undefined) {
+        return state.rates.results[String(curr)];
+      }
+      else {
+        state.ratesLoaded = false;
+        return 1;
+      }
     }
   },
   mutations: {
@@ -60,6 +66,9 @@ export default createStore({
     },
     setCurrencies(state, payload) {
       state.currencies = payload;
+    },
+    setRatesLoaded(state, payload) {
+      state.ratesLoaded = payload;
     }
   },
   actions: {
@@ -90,6 +99,7 @@ export default createStore({
       ).then((res) => res.json());
       context.commit("setRates", rates);
       context.commit("setCurrencies", Object.keys(rates.results))
+      context.commit("setRatesLoaded", true);
     }
   },
   modules: {
