@@ -28,10 +28,10 @@
       <tr v-for="item in $store.state.products" :key="item.id">
         <td>{{ item.UPC }}</td>
         <td>{{ item.Name }}</td>
-        <td>{{ item.Price }}</td>
-        <td>{{ item.calculateDiscount() }}</td>
-        <td>{{ item.TaxRate }}</td>
-        <td>{{ item.calculateTotal() }}</td>
+        <td>{{ item.Price }} {{ item.Currency }}</td>
+        <td>{{ item.calculateDiscount() }} {{ item.Currency }}</td>
+        <td>{{ item.TaxRate }}%</td>
+        <td>{{ item.calculateTotal() }} {{ item.Currency }}</td>
       </tr>
     </tbody>
 
@@ -53,15 +53,18 @@
             <ul class="list-group list-group-flush firstUl border-right btnLi">
               <li class="list-group-item">UPC : {{ item.UPC }}</li>
               <li class="list-group-item">Name {{ item.Name }}</li>
-              <li class="list-group-item">Price : {{ item.Price }}$</li>
+              <li class="list-group-item">
+                Price : {{ item.Price }} {{ item.Currency }}
+              </li>
             </ul>
             <ul class="list-group list-group-flush secondUl btnLi">
               <li class="list-group-item">Tax rate : {{ item.TaxRate }}%</li>
               <li class="list-group-item">
-                Discount {{ item.calculateDiscount() }}$
+                Discount {{ item.calculateDiscount() }} {{ item.Currency }}
               </li>
               <li class="list-group-item">
-                Total : {{ item.calculateTotal() }}$
+                Total : {{ (item.calculateTotal(), item.Currency) }}
+                {{ item.Currency }}
               </li>
             </ul>
           </div>
@@ -74,6 +77,7 @@
 <script>
 export default {
   name: "Products",
+  setup() {},
   data() {
     return {
       showTable: true,
@@ -90,6 +94,7 @@ export default {
       this.$store.dispatch("changeDiscountMode", newValue);
     },
   },
+  mounted() {},
 };
 </script>
 

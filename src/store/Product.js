@@ -4,12 +4,14 @@ class Product {
     constructor(name, UPC, price, image) {
         this.Name = name;
         this.UPC = UPC;
+        this.PriceUSD = price;
         this.Price = price;
         this.TaxRate = 20;
         this.UPCDiscount = 0;
         this.Image = image;
         this.Cap = 0;
         this.CapType = "%";
+        this.Currency = "USD";
     }
 
     getUniversalDiscount() {

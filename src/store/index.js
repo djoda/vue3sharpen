@@ -17,13 +17,20 @@ export default createStore({
     expenses: [new Expenses("Transport", 500, "$", 111)],
     beforeDiscount: true,
     additiveMode: true,
+    apiKey: "6ca79beb46-556a793292-r0507o",
+    rates: [],
+    currencies: []
   },
   getters: {
     getByUPC: (state) => (UPC) => {
       return state.products.find(e => e.UPC === UPC);
     },
     getExpensesByUPC: (state) => (UPC) => {
-      return state.expenses.filter(e => e.ProductUPC == UPC);
+      return state.expenses.filter(e => e.ProductUPC === UPC);
+    },
+    getCurrencyRate: (state) => (curr) => {
+      console.log(curr)
+      return state.rates.results[String(curr)];
     }
   },
   mutations: {
@@ -47,6 +54,12 @@ export default createStore({
     },
     changeDiscountMode(state, payload) {
       state.additiveMode = payload;
+    },
+    setRates(state, payload) {
+      state.rates = payload;
+    },
+    setCurrencies(state, payload) {
+      state.currencies = payload;
     }
   },
   actions: {
@@ -70,6 +83,13 @@ export default createStore({
     },
     async changeDiscountMode(context, payload) {
       context.commit("changeDiscountMode", payload);
+    },
+    async getRates(context) {
+      let rates = await fetch(
+        "https://api.fastforex.io/fetch-all?api_key=" + context.state.apiKey
+      ).then((res) => res.json());
+      context.commit("setRates", rates);
+      context.commit("setCurrencies", Object.keys(rates.results))
     }
   },
   modules: {

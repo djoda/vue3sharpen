@@ -26,6 +26,9 @@ export default {
   data() {
     return {};
   },
+  async mounted() {
+    this.$store.dispatch("getRates");
+  },
 };
 </script>
 

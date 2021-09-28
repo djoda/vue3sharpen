@@ -6,13 +6,15 @@
         <ul class="list-group list-group-flush ml-3">
           <li class="list-group-item">UPC : {{ product.UPC }}</li>
           <li class="list-group-item">Name {{ product.Name }}</li>
-          <li class="list-group-item">Price : {{ product.Price }}$</li>
+          <li class="list-group-item">
+            Price : {{ product.Price }} {{ product.Currency }}
+          </li>
           <li class="list-group-item">Tax rate : {{ product.TaxRate }}%</li>
           <li class="list-group-item">
-            Discount {{ product.calculateDiscount() }}$
+            Discount {{ product.calculateDiscount() }} {{ product.Currency }}
           </li>
           <li class="list-group-item">
-            Total : {{ product.calculateTotal() }}$
+            Total : {{ product.calculateTotal() }} {{ product.Currency }}
           </li>
         </ul>
 
@@ -54,6 +56,12 @@
         >
           Add cap
         </button>
+        <label class="d-block select">Currency: </label>
+        <select v-model="curr" class="form-control select">
+          <option v-for="curr in $store.state.currencies" :key="curr">
+            {{ curr }}
+          </option>
+        </select>
       </div>
     </div>
   </div>
@@ -193,7 +201,16 @@ export default {
       amountType: "%",
       cap: 0,
       capType: "%",
+      curr: "",
     };
+  },
+  watch: {
+    curr(newValue) {
+      this.product.Price =
+        this.product.PriceUSD * this.$store.getters.getCurrencyRate(newValue);
+      this.product.Currency = newValue;
+      this.$store.dispatch("updateProduct", this.product);
+    },
   },
   methods: {
     updateProduct() {
@@ -220,6 +237,9 @@ export default {
       this.product.CapType = this.capType;
       this.$store.dispatch("updateProduct", this.product);
     },
+  },
+  mounted() {
+    this.curr = this.product.Currency;
   },
 };
 </script>
@@ -260,5 +280,9 @@ export default {
   position: absolute;
   top: 215px;
   left: 260px;
+}
+
+.select {
+  margin: 10px;
 }
 </style>
