@@ -8,6 +8,8 @@ class Product {
         this.TaxRate = 20;
         this.UPCDiscount = 0;
         this.Image = image;
+        this.Cap = 0;
+        this.CapType = "%";
     }
 
     getUniversalDiscount() {
@@ -25,19 +27,28 @@ class Product {
         } else {
             ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
         }
-        if (useStore().state.cap != 0 && ret >= useStore().state.cap)
-            return useStore().state.cap;
-        else
-            return ret;
 
+        if (this.Cap !== 0) {
+            if (this.CapType === "%") {
+                let cap = this.Price * this.Cap / 100;
+                if (cap <= ret)
+                    return cap;
+                else
+                    return ret;
+            } else {
+                if (this.Cap <= ret)
+                    return this.Cap;
+                else
+                    return ret;
+            }
+        } else
+            return ret;
     }
 
     calculateTax() {
-        // console.log((useStore()).state.beforeDiscount)
         if ((useStore()).state.beforeDiscount)
             return this.Price * (this.TaxRate / 100);
         else {
-            // console.log("ASDAS", this.calculateDiscount(this.getUniversalDiscount()))
             return (this.Price - this.calculateDiscount()) * this.TaxRate / 100;
         }
     }

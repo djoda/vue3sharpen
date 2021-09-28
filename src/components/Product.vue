@@ -47,6 +47,13 @@
         >
           Add expenses
         </button>
+        <button
+          class="btn btn-primary"
+          data-bs-target="#capModal"
+          data-bs-toggle="modal"
+        >
+          Add cap
+        </button>
       </div>
     </div>
   </div>
@@ -125,6 +132,43 @@
       </div>
     </div>
   </div>
+
+  <div class="modal" id="capModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Cap</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <label>Amount</label>
+          <input type="text" class="form-control mt-2" v-model="cap" />
+          <label>Cap type</label>
+          <select class="form-control" v-model="capType">
+            <option value="%">%</option>
+            <option value="$">$</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" @click="addCap">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -147,6 +191,8 @@ export default {
       amount: 0,
       description: "",
       amountType: "%",
+      cap: 0,
+      capType: "%",
     };
   },
   methods: {
@@ -168,6 +214,11 @@ export default {
       }
       this.amount = 0;
       this.description = "";
+    },
+    addCap() {
+      this.product.Cap = this.cap;
+      this.product.CapType = this.capType;
+      this.$store.dispatch("updateProduct", this.product);
     },
   },
 };

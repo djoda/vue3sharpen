@@ -12,10 +12,6 @@
         Set UPC discount
       </button></router-link
     >
-
-    <router-link to="/cap"
-      ><button class="btn btn-primary mt-3">Set cap</button></router-link
-    >
   </div>
 
   <div class="main">

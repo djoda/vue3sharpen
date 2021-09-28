@@ -17,7 +17,6 @@ export default createStore({
     expenses: [new Expenses("Transport", 500, "$", 111)],
     beforeDiscount: true,
     additiveMode: true,
-    cap: 0
   },
   getters: {
     getByUPC: (state) => (UPC) => {
@@ -48,9 +47,6 @@ export default createStore({
     },
     changeDiscountMode(state, payload) {
       state.additiveMode = payload;
-    },
-    setCap(state, payload) {
-      state.cap = payload;
     }
   },
   actions: {
@@ -74,9 +70,6 @@ export default createStore({
     },
     async changeDiscountMode(context, payload) {
       context.commit("changeDiscountMode", payload);
-    },
-    async setCap(context, payload) {
-      context.commit("setCap", payload);
     }
   },
   modules: {
