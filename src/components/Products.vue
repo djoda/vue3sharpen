@@ -63,7 +63,7 @@
                 Discount {{ item.calculateDiscount() }} {{ item.Currency }}
               </li>
               <li class="list-group-item">
-                Total : {{ (item.calculateTotal(), item.Currency) }}
+                Total : {{ item.calculateTotal() }}{{ item.Currency }}
                 {{ item.Currency }}
               </li>
             </ul>

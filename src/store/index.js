@@ -43,14 +43,14 @@ export default createStore({
     addProduct(state, item) {
       state.products.push(item);
     },
+    updateProduct(state, payload) {
+      state.products = [...state.products.filter(e => e.UPC != payload.UPC), payload];
+    },
     setUniversalDiscount(state, ud) {
       state.universalDiscount = ud;
     },
     setMockProducts(state, items) {
       state.mockProducts = items;
-    },
-    setUPCDiscount(state, payload) {
-      state.products = [...state.products.filter(e => e.UPC != payload.UPC), payload];
     },
     addExpense(state, payload) {
       state.expenses.push(payload);
@@ -79,10 +79,10 @@ export default createStore({
     async updateUPCDiscount(context, payload) {
       let prod = context.getters.getByUPC(payload.UPC);
       prod.UPCDiscount = payload.UPCDiscount;
-      context.commit("setUPCDiscount", prod);
+      context.commit("updateProduct", prod);
     },
     async updateProduct(context, payload) {
-      context.commit("addProduct", payload);
+      context.commit("updateProduct", payload);
     },
     async addExpense(context, payload) {
       context.commit("addExpense", payload);
