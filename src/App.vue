@@ -1,19 +1,5 @@
 <template>
-  <div class="sidebar">
-    <router-link to="/"
-      ><button class="btn btn-primary">Show products</button></router-link
-    >
-    <router-link to="/discount"
-      ><button class="btn btn-primary mt-3">Set discount</button></router-link
-    >
-
-    <router-link to="/upcdiscount"
-      ><button class="btn btn-primary mt-3">
-        Set UPC discount
-      </button></router-link
-    >
-  </div>
-
+  <Sidebar v-if="logedIn" />
   <div class="main">
     <router-view></router-view>
   </div>
@@ -21,10 +7,23 @@
 
 <script>
 import { useStore } from "vuex";
+import Sidebar from "@/components/Sidebar.vue";
+
 export default {
   name: "App",
+  components: {
+    Sidebar,
+  },
   setup() {
+    let logedIn = false;
+    if (localStorage.getItem("token")) {
+      logedIn = true;
+    } else logedIn = false;
     useStore().dispatch("getRates");
+
+    return {
+      logedIn,
+    };
   },
   data() {
     return {};
@@ -43,18 +42,6 @@ body {
 #app {
   width: 100%;
   min-height: 100%;
-}
-
-.sidebar {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: fixed;
-  flex-direction: column;
-  width: 250px;
-  min-height: 100vh;
-  padding-top: 20px;
-  background-color: rgb(99, 112, 112);
 }
 
 .main {
