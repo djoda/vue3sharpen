@@ -23,7 +23,7 @@ export default class ProductTest {
     }
 
     calculateGlobal() {
-        return this.Price * this.getUniversalDiscount() / 100;
+        return (this.Price * this.getUniversalDiscount() / 100).toFixed(2);
     }
 
     calculateDiscount() {

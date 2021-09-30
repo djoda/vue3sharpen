@@ -2,7 +2,12 @@
   <div class="mt-4">
     <div class="mt-2"><label>Universal Discunt</label></div>
     <div class="mt-2">
-      <input class="form-control" type="text" v-model="ud" />
+      <input
+        id="udInput"
+        class="form-control"
+        type="text"
+        v-model.number="ud"
+      />
     </div>
     <div class="mt-2">
       <button @click="updateUd" class="btn btn-primary">Change</button>

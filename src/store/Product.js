@@ -1,6 +1,6 @@
-import { useStore } from "vuex";
+import store from "@/store"
 
-class Product {
+export class Product {
     constructor(name, UPC, price, image) {
         this.Name = name;
         this.UPC = UPC;
@@ -14,8 +14,14 @@ class Product {
         this.Currency = "USD";
     }
 
+
+    calculateWithTax() {
+        let ret = this.Price + this.calculateTax();
+        return Number(ret.toFixed(2));
+    }
+
     getUniversalDiscount() {
-        return (useStore()).state.universalDiscount;
+        return store.state.universalDiscount;
     }
 
     calculateGlobal() {
@@ -24,7 +30,7 @@ class Product {
 
     calculateDiscount() {
         let ret;
-        if (useStore().state.additiveMode && this.UPCDiscount != 0) {
+        if (store.state.additiveMode && this.UPCDiscount != 0) {
             ret = this.calculateGlobal() + this.calculateUCPDiscount();
         } else {
             ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
@@ -48,7 +54,7 @@ class Product {
     }
 
     calculateTax() {
-        if ((useStore()).state.beforeDiscount)
+        if (store.state.beforeDiscount)
             return this.Price * (this.TaxRate / 100);
         else {
             return (this.Price - this.calculateDiscount()) * this.TaxRate / 100;
@@ -61,7 +67,7 @@ class Product {
 
     calculateExpenses() {
         let total = 0;
-        for (let expense of useStore().state.expenses) {
+        for (let expense of store.state.expenses) {
             if (expense.AmountType === "%") {
                 total += this.Price * expense.Amount / 100;
             } else {
@@ -77,4 +83,3 @@ class Product {
         );
     }
 }
-export default Product;

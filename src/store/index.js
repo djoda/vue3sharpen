@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import Product from "./Product"
+import { Product } from "./Product"
 import saveToLocalStorage from "./Plugins/webStorage"
 import Expenses from './Expenses';
 
