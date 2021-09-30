@@ -39,6 +39,7 @@ exports[`Product.vue snapshot 1`] = `
           </label>
           <input
             class="form-control mt-2"
+            id="newTaxRateInput"
             type="text"
           />
         </div>
@@ -54,6 +55,7 @@ exports[`Product.vue snapshot 1`] = `
           </button>
           <button
             class="btn btn-primary"
+            id="newTaxRateBtnSave"
             type="button"
           >
              Save changes 

@@ -8,6 +8,7 @@ export default createStore({
     mockProducts: [],
     products:
       [
+        new Product("The Little Price", 12345, 20.25, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
         new Product("Product1", 111, 4565, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
         new Product("Product2", 222, 3622, "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"),
         new Product("Product3", 333, 441565, "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"),

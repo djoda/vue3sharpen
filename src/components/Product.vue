@@ -35,6 +35,7 @@
 
       <div id="btnDiv">
         <button
+          id="newTaxBtn"
           class="btn btn-primary"
           data-bs-target="#myModal"
           data-bs-toggle="modal"
@@ -80,7 +81,12 @@
         </div>
         <div class="modal-body">
           <label>Set new tax rate for product</label>
-          <input type="text" class="form-control mt-2" v-model="newTaxRate" />
+          <input
+            id="newTaxRateInput"
+            type="text"
+            class="form-control mt-2"
+            v-model.number="newTaxRate"
+          />
         </div>
         <div class="modal-footer">
           <button
@@ -90,7 +96,12 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary" @click="updateProduct">
+          <button
+            id="newTaxRateBtnSave"
+            type="button"
+            class="btn btn-primary"
+            @click="updateProduct"
+          >
             Save changes
           </button>
         </div>

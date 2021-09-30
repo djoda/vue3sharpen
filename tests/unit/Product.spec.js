@@ -2,20 +2,39 @@ import { mount, } from "@vue/test-utils"
 import Product from "@/components/Product.vue"
 import store from "@/store"
 import router from "@/router"
-import { config } from '@vue/test-utils'
 import ProductTest from "../ProductTest"
 
-
 describe("Product.vue", () => {
+    test("newTaxRate", async () => {
+        const wrapper = mount(Product, {
+            global: {
+                plugins: [store, router],
+                mocks: {
+                    product: new ProductTest("The Little Price", 12345, 20.25, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", store),
+                }
+            },
+        });
+
+        await wrapper.find("#newTaxRateInput").setValue(21);
+        expect(wrapper.vm.newTaxRate).toBe(21);
+
+        const btnSave = wrapper.find("#newTaxRateBtnSave");
+        await btnSave.trigger("click");
+
+        expect(wrapper.vm.product.calculateWithTax()).toBe(24.50);
+    });
+
     test("snapshot", () => {
         const wrapper = mount(Product, {
             global: {
                 plugins: [store, router],
                 mocks: {
-                    product: new ProductTest("Product1", 111, 4565, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+                    product: new ProductTest("The Little Price", 12345, 20.25, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
                 }
             },
         });
+
         expect(wrapper.element).toMatchSnapshot();
-    })
+
+    });
 })

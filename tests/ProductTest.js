@@ -1,5 +1,5 @@
 export default class ProductTest {
-    constructor(name, UPC, price, image) {
+    constructor(name, UPC, price, image, store) {
         this.Name = name;
         this.UPC = UPC;
         this.PriceUSD = price;
@@ -10,10 +10,16 @@ export default class ProductTest {
         this.Cap = 0;
         this.CapType = "%";
         this.Currency = "USD";
+        this.store = store;
     }
 
     getUniversalDiscount() {
-        return (useStore()).state.universalDiscount;
+        return this.store.state.universalDiscount;
+    }
+
+    calculateWithTax() {
+        let ret = this.Price + this.calculateTax();
+        return Number(ret.toFixed(2));
     }
 
     calculateGlobal() {
@@ -22,7 +28,7 @@ export default class ProductTest {
 
     calculateDiscount() {
         let ret;
-        if (useStore().state.additiveMode && this.UPCDiscount != 0) {
+        if (this.store.state.additiveMode && this.UPCDiscount != 0) {
             ret = this.calculateGlobal() + this.calculateUCPDiscount();
         } else {
             ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
@@ -46,7 +52,7 @@ export default class ProductTest {
     }
 
     calculateTax() {
-        if ((useStore()).state.beforeDiscount)
+        if (this.store.state.beforeDiscount)
             return this.Price * (this.TaxRate / 100);
         else {
             return (this.Price - this.calculateDiscount()) * this.TaxRate / 100;
@@ -59,7 +65,7 @@ export default class ProductTest {
 
     calculateExpenses() {
         let total = 0;
-        for (let expense of useStore().state.expenses) {
+        for (let expense of this.store.state.expenses) {
             if (expense.AmountType === "%") {
                 total += this.Price * expense.Amount / 100;
             } else {
