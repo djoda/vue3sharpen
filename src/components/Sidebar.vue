@@ -25,14 +25,15 @@ export default {
   methods: {
     test() {
       let chal = "Bearer " + localStorage.getItem("token");
-      console.log(chal);
       axios({
         url: "http://localhost:5000/home/secret",
         method: "post",
         headers: {
           Authorization: chal,
         },
-      }).then((res) => console.log(res.data));
+      }).then((res) => {
+        console.log(res.data);
+      });
     },
     deleteToken() {
       localStorage.removeItem("token");

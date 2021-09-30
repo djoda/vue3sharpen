@@ -14,9 +14,7 @@
 <script>
 import axios from "axios";
 export default {
-  setup() {
-    console.log("token", localStorage.getItem("token"));
-  },
+  setup() {},
   name: "Login",
   data() {
     return {
@@ -34,7 +32,6 @@ export default {
           password: this.password,
         },
       }).then((res) => {
-        console.log(res.data);
         if (res.data) {
           localStorage.setItem("token", res.data);
           this.$router.go("/");
