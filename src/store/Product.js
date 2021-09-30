@@ -67,7 +67,7 @@ export class Product {
 
     calculateExpenses() {
         let total = 0;
-        for (let expense of store.state.expenses) {
+        for (let expense of store.getters.getExpensesByUPC(this.UPC)) {
             if (expense.AmountType === "%") {
                 total += this.Price * expense.Amount / 100;
             } else {
@@ -78,6 +78,7 @@ export class Product {
     }
 
     calculateTotal() {
+        console.log(this.calculateExpenses())
         return (
             (this.Price + this.calculateExpenses() - this.calculateDiscount() + this.calculateTax()).toFixed(2)
         );
