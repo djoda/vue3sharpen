@@ -2,11 +2,9 @@ import { mount } from "@vue/test-utils"
 import Product from "@/components/Product.vue"
 import store from "@/store"
 import router from "@/router"
-import { useStore } from "vuex";
 import { Product as Prod } from "../../src/store/Product"
 
 describe("Product.vue", () => {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAA", useStore)
     test("newTaxRate", async () => {
         const wrapper = mount(Product, {
             global: {
@@ -31,7 +29,7 @@ describe("Product.vue", () => {
             global: {
                 plugins: [store, router],
                 mocks: {
-                    product: new ProductTest("The Little Price", 12345, 20.25, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+                    product: new Prod("The Little Price", 12345, 20.25, "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
                 }
             },
         });
