@@ -2,7 +2,6 @@ import { mount } from "@vue/test-utils"
 import Product from "@/components/Product.vue"
 import store from "@/store"
 import router from "@/router"
-import ProductTest from "../ProductTest"
 import { useStore } from "vuex";
 import { Product as Prod } from "../../src/store/Product"
 

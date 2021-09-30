@@ -2,8 +2,6 @@ import { mount, } from "@vue/test-utils"
 import store from "@/store"
 import router from "@/router"
 import Discount from "@/components/Discount"
-import ProductTest from "../ProductTest";
-import { useStore } from "vuex";
 
 describe("Discount.vue", () => {
     test("univesal discount", async () => {
