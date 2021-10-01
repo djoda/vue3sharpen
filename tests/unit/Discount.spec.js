@@ -4,6 +4,7 @@ import router from "@/router"
 import Discount from "@/components/Discount"
 
 describe("Discount.vue", () => {
+
     test("univesal discount", async () => {
         const wrapper = mount(Discount, {
             global: {

@@ -30,12 +30,13 @@ export class Product {
 
     calculateDiscount() {
         let ret;
-        if (store.state.additiveMode && this.UPCDiscount != 0) {
+        if (store.state.additiveMode) {
             ret = this.calculateGlobal() + this.calculateUCPDiscount();
         } else {
-            ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
+            if (this.UPCDiscount != 0) {
+                ret = (this.Price - this.calculateGlobal()) * this.UPCDiscount / 100;
+            }
         }
-
         if (this.Cap !== 0) {
             if (this.CapType === "%") {
                 let cap = this.Price * this.Cap / 100;
@@ -78,9 +79,8 @@ export class Product {
     }
 
     calculateTotal() {
-        console.log(this.calculateExpenses())
         return (
-            (this.Price + this.calculateExpenses() - this.calculateDiscount() + this.calculateTax()).toFixed(2)
+            Number((this.Price + this.calculateExpenses() - this.calculateDiscount() + this.calculateTax()).toFixed(2))
         );
     }
 }

@@ -58,7 +58,7 @@
           Add cap
         </button>
         <label class="d-block select">Currency: </label>
-        <select v-model="curr" class="form-control select">
+        <select id="currSelect" v-model="curr" class="form-control select">
           <option v-for="curr in $store.state.currencies" :key="curr">
             {{ curr }}
           </option>
@@ -126,12 +126,13 @@
           <input type="text" class="form-control mt-2" v-model="description" />
           <label>Set new tax rate for product</label>
           <input
+            id="taxAmount"
             type="text"
             class="form-control mt-2"
             v-model.number="amount"
           />
           <label>Amount type</label>
-          <select class="form-control" v-model="amountType">
+          <select id="taxType" class="form-control" v-model="amountType">
             <option value="%">%</option>
             <option value="$">$</option>
           </select>
@@ -144,7 +145,12 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary" @click="addExpense">
+          <button
+            id="taxBtn"
+            type="button"
+            class="btn btn-primary"
+            @click="addExpense"
+          >
             Save changes
           </button>
         </div>
@@ -166,9 +172,14 @@
         </div>
         <div class="modal-body">
           <label>Amount</label>
-          <input type="text" class="form-control mt-2" v-model="cap" />
+          <input
+            id="capAmount"
+            type="text"
+            class="form-control mt-2"
+            v-model="cap"
+          />
           <label>Cap type</label>
-          <select class="form-control" v-model="capType">
+          <select id="capType" class="form-control" v-model="capType">
             <option value="%">%</option>
             <option value="$">$</option>
           </select>
@@ -181,7 +192,12 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary" @click="addCap">
+          <button
+            id="capBtn"
+            type="button"
+            class="btn btn-primary"
+            @click="addCap"
+          >
             Save changes
           </button>
         </div>
@@ -222,7 +238,10 @@ export default {
         this.product.Price =
           this.product.PriceUSD * this.$store.getters.getCurrencyRate(newValue);
         this.product.Currency = newValue;
-        this.$store.dispatch("updateProduct", this.product);
+        this.$store.dispatch("updateProduct", {
+          ...this.product,
+          Currency: newValue,
+        });
       }
     },
   },

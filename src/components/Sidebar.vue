@@ -31,8 +31,6 @@ export default {
         headers: {
           Authorization: chal,
         },
-      }).then((res) => {
-        console.log(res.data);
       });
     },
     deleteToken() {

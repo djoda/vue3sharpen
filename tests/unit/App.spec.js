@@ -4,6 +4,7 @@ import store from "@/store"
 import router from "@/router"
 
 describe("App.vue", () => {
+
     test("snapshot", () => {
         const wrapper = mount(App, {
             global: {

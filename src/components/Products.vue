@@ -12,9 +12,15 @@
         style="margin-left: 15px"
         type="checkbox"
         v-model="taxBeforeDiscount"
+        id="beforeTax"
       />
       <label style="margin-left: 20px">Switch discount mode</label>
-      <input style="margin-left: 15px" type="checkbox" v-model="additiveMode" />
+      <input
+        id="discountMode"
+        style="margin-left: 15px"
+        type="checkbox"
+        v-model="additiveMode"
+      />
       <tr v-show="showTable">
         <th scope="col">UPC</th>
         <th scope="col">Name</th>
